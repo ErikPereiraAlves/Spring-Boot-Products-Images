@@ -15,11 +15,8 @@ public class Image implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imageId;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false,
-            foreignKey = @ForeignKey(name = "IMAGE_PRODUCT_FK"))
-    private Product product;
+    @Column(name = "PRODUCT_ID")
+    private Long productId;
 
     @Column(name = "URL")
     private String url;
@@ -32,12 +29,12 @@ public class Image implements Serializable {
         this.imageId = imageId;
     }
 
-    public Product getProduct() {
-        return product;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     public String getUrl() {
@@ -52,9 +49,9 @@ public class Image implements Serializable {
     @Override
     public String toString() {
         return "Image{" +
-                "id='" + imageId + '\'' +
+                "imageId='" + imageId + '\'' +
                 "url='" + url + '\'' +
-                "Product='" + product.getProductId() +
+                "productId='" + productId +
                 '}';
     }
 

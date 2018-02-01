@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProductRepository  extends JpaRepository<Product, Long> {
 
 
-    @Query("SELECT * FROM PRODUCT where PRODUCT_PARENT_ID = :productParentId")
+    @Query("SELECT p FROM Product p where p.productParentId = :productParentId")
     List<Product> findAllChildrenProductsByProductParentId(@Param("productParentId") Long id);
 
 }
