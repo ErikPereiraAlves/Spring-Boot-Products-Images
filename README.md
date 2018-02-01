@@ -34,7 +34,7 @@ Technical Specification:
 - How to run the suite of automated tests.
 - Mention anything that was asked but not delivered and why, and any additional comments.
 
-==========================================================================================================================
+=====================================================================
 
 Solution:
 

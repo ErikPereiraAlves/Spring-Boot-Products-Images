@@ -1,6 +1,8 @@
 package com.erikalves.application.controllers;
 
 
+import com.erikalves.application.model.Product;
+import com.erikalves.application.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,22 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/store/api/1/products/")
 class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
+    @Autowired
+    private ProductService service;
 
 
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Iterable<Product>> retrieveProducts(final HttpServletRequest request) {
+
+        Iterable<Product> products = service.findAll();
+        return new ResponseEntity<Iterable<Product>>(products, HttpStatus.OK);
+
+    }
 
 }

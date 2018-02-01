@@ -11,15 +11,15 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework.datalayer" level="warn" additivity="false">
+    <logger name="org.springframework.datalayer" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="com.erikalves.application" level="warn" additivity="false">
+    <logger name="com.erikalves.application" level="debug" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <root level="warn">
+    <root level="debug">
         <appender-ref ref="STDOUT"/>
     </root>
 
