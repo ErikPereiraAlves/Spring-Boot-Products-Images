@@ -22,7 +22,7 @@ public class Image implements Serializable {
     private Product product;
 
     @Column(name = "URL")
-    private int url;
+    private String url;
 
     public Long getImageId() {
         return imageId;
@@ -40,11 +40,11 @@ public class Image implements Serializable {
         this.product = product;
     }
 
-    public int getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(int url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

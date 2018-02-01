@@ -16,8 +16,8 @@ public class Product implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long productId;
 
-    @Column (name = "PRODUCT_PARENT")
-    private String producParent;
+    @Column (name = "PRODUCT_PARENT_ID")
+    private String producParentId;
 
     @Column (name = "PRODUCT_NAME")
     private String productName;
@@ -43,12 +43,12 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public String getProducParent() {
-        return producParent;
+    public String getProducParentId() {
+        return producParentId;
     }
 
-    public void setProducParent(String producParent) {
-        this.producParent = producParent;
+    public void setProducParentId(String producParent) {
+        this.producParentId = producParentId;
     }
 
     public String getProductName() {
@@ -96,7 +96,7 @@ public class Product implements Serializable {
     public String toString() {
         return "Product{" +
                 "id='" + productId + '\'' +
-                "parent='" + producParent + '\'' +
+                "parent='" + producParentId + '\'' +
                 "desc='" + productDesc + '\'' +
                 "price='" + productPrice + '\'' +
                 "created TS='" + productCreatedTs + '\'' +
