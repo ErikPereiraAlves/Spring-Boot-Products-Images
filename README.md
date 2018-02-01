@@ -46,4 +46,4 @@ We can run the spring boot application using the following maven command.
 
 2- H2 Web Console
 
-    I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console
+    I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console  (user id:  erik )
