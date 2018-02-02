@@ -29,8 +29,10 @@ class ImageController {
     private ImageService imageService;
 
 
-
-
+    @GetMapping(value = "/product/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response<Iterable<Image>>> getInclude(@PathVariable("product_id") String productId) {
+        return ResponseEntity.ok(new Response<>(imageService.findAllImagesByProductId(Util.LongfyId(productId))));
+    }
 
 
     //delete
