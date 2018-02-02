@@ -1,5 +1,7 @@
 package com.erikalves.application.model;
 
+import org.hibernate.annotations.Parent;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -20,6 +22,7 @@ public class Image implements Serializable {
 
     @Column(name = "URL")
     private String url;
+
 
     public Long getImageId() {
         return imageId;
@@ -44,6 +47,7 @@ public class Image implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+
 
 
     @Override

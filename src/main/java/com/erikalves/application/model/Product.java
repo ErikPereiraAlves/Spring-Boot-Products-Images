@@ -2,6 +2,8 @@ package com.erikalves.application.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +19,7 @@ public class Product implements Serializable {
     private Long productId;
 
     @Column (name = "PRODUCT_PARENT_ID")
-    private String productParentId;
+    private Long productParentId;
 
     @Column (name = "PRODUCT_NAME")
     private String productName;
@@ -29,10 +31,13 @@ public class Product implements Serializable {
     private Double productPrice;
 
     @Column (name = "PRODUCT_CREATED_TS")
-    private Date productCreatedTs;
+    private Timestamp productCreatedTs;
 
     @Column (name = "PRODUCT_UPDATED_TS")
-    private Date productUpdatedTs;
+    private Timestamp productUpdatedTs;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
+    private Set<Image> images;
 
 
     public Long getProductId() {
@@ -43,11 +48,11 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public String getProductParentId() {
+    public Long getProductParentId() {
         return productParentId;
     }
 
-    public void setProductParentId(String productParentId) {
+    public void setProductParentId(Long productParentId) {
         this.productParentId = productParentId;
     }
 
@@ -75,32 +80,41 @@ public class Product implements Serializable {
         this.productPrice = productPrice;
     }
 
-    public Date getProductCreatedTs() {
+    public Timestamp getProductCreatedTs() {
         return productCreatedTs;
     }
 
-    public void setProductCreatedTs(Date productCreatedTs) {
+    public void setProductCreatedTs(Timestamp productCreatedTs) {
         this.productCreatedTs = productCreatedTs;
     }
 
-    public Date getProductUpdatedTs() {
+    public Timestamp getProductUpdatedTs() {
         return productUpdatedTs;
     }
 
-    public void setProductUpdatedTs(Date productUpdatedTs) {
+    public void setProductUpdatedTs(Timestamp productUpdatedTs) {
         this.productUpdatedTs = productUpdatedTs;
     }
 
+    public Set<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(Set<Image> images) {
+        this.images = images;
+    }
 
     @Override
     public String toString() {
         return "Product{" +
-                "id='" + productId + '\'' +
-                "parent='" + productParentId + '\'' +
-                "desc='" + productDesc + '\'' +
-                "price='" + productPrice + '\'' +
-                "created TS='" + productCreatedTs + '\'' +
-                "updated TS='" + productUpdatedTs +
+                "productId='" + productId + '\'' +
+                "productParentId='" + productParentId + '\'' +
+                "productName='" + productName + '\'' +
+                "productDesc='" + productDesc + '\'' +
+                "productPrice='" + productPrice + '\'' +
+                "productCreatedTs='" + productCreatedTs + '\'' +
+                "productUpdatedTs='" + productUpdatedTs + '\'' +
+                "productUpdatedTs='" + productUpdatedTs +
                 '}';
     }
 }

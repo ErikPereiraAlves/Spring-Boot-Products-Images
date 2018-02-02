@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -58,12 +59,12 @@ public class Util {
         }
     }
 
-    public static Collection<Image> deserializeOrder( String jsonAsString) throws ApplicationException {
+    public static Collection<Image> deserializeImageCollection( String jsonAsString) throws ApplicationException {
 
         return deserialize(IMAGE_COLLECTION_TYPE_TOKEN, jsonAsString);
     }
 
-    public static Collection<Product> deserializeProduct(String jsonAsString) throws ApplicationException {
+    public static Collection<Product> deserializeProductCollection(String jsonAsString) throws ApplicationException {
 
         return deserialize(PRODUCT_COLLECTION_TYPE_TOKEN, jsonAsString);
     }
@@ -88,32 +89,14 @@ public class Util {
         return Collections.emptyList();
     }
 
-    public static HashMap<String, String> jsonToMap(String s) throws ApplicationException {
 
-        HashMap<String, String> map = new HashMap<String, String>();
-        JSONObject jObject = new JSONObject(s);
-        Iterator<?> keys = jObject.keys();
 
-        while( keys.hasNext() ){
-            String key = (String)keys.next();
-            String value = jObject.getString(key);
-            LOGGER.debug("key : {} value {}",key,value);
-            map.put(key, value);
-        }
-
-        LOGGER.debug("json : {}",jObject);
-        LOGGER.debug("map {}: ",map);
-
-        if(0 == map.size()){
-            throw new ApplicationException("Unable to retrieve json from request");
-        }
-
-        return map;
-    }
-
-    public static java.sql.Date getCurrentTS(){
+    public static java.sql.Date getCurrentDate(){
 
         return new java.sql.Date(System.currentTimeMillis());
+    }
+    public static java.sql.Timestamp getCurrentTs(){
+        return new Timestamp(System.currentTimeMillis());
     }
 
     public static String StringfyId(Long id){
