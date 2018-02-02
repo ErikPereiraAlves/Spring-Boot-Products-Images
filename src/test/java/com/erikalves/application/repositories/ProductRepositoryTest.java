@@ -37,7 +37,6 @@ public class ProductRepositoryTest {
     @Before
     public void  begin(){
 
-
         createdProduct = new Product();
         createdProduct.setProductParentId(1l);
         createdProduct.setProductName("Smartphone JUNIT");
@@ -62,17 +61,17 @@ public class ProductRepositoryTest {
 
        Product savedProduct = productRepository.save(createdProduct);
        LOGGER.debug("saved product ID {}",savedProduct);
-       // Assert.assertEquals(savedProduct,createdProduct);
-
+       Assert.assertNotNull(savedProduct.getProductId());
 
     }
 
     public void shouldDeleteProduct(){
+
         Long id = createdProduct.getProductId();
         productRepository.delete(id);
         Product deletedProduct = productRepository.findOne(id);
         Assert.assertEquals(null,deletedProduct);
-        //LOGGER.debug(deletedProduct.toString());
+
     }
 
 
@@ -101,11 +100,15 @@ public class ProductRepositoryTest {
         Assert.assertTrue(3 ==savedProduct.getImages().size());
     }
 
-    /*
+
     @Test
     public void shouldFindAllProductsExcludingRelationships(){
 
         List<Product> list = productRepository.findAll();
+
+        for(Product product : list){
+            LOGGER.debug(" *** RESULT *** {}",product.toString());
+        }
 
         Assert.assertTrue(list.size() > 0);
     }
@@ -118,19 +121,25 @@ public class ProductRepositoryTest {
     }
 
 
+    //Get specific product including its specified relationships (child product and/or images)
     @Test
     public void shouldFindProductIncludingRelationships(){
 
-        List <Product> product = productRepository.findAllChildrenProductsByProductParentId(1l);
+        List <Product> list = productRepository.findAllChildrenProductsByProductParentId(1l); // product 1 is a parent, created by data.sql
+
+        for(Product product : list){
+            LOGGER.debug(" *** RESULT *** {}",product.toString());
+        }
     }
 
+    //Get specific product excluding its specified relationships (child product and/or images)
     @Test
     public void shouldFindProductExcludingRelationships() {
 
         Product productNoRelationship = productRepository.findOne(3l);
-
+        LOGGER.debug(" *** RESULT *** {}",productNoRelationship.toString());
 
 
     }
-    */
+
 }
