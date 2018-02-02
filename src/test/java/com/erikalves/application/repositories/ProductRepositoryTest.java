@@ -30,10 +30,7 @@ public class ProductRepositoryTest {
     @Autowired (required=true)
     ProductRepository productRepository;
 
-
-    Product createdProduct, updatableProduct;
-
-    Long productId = 99l;
+    Product createdProduct;
 
     Set<Image> images = new HashSet<>();
 
@@ -48,16 +45,6 @@ public class ProductRepositoryTest {
         createdProduct.setProductPrice(200.00);
         createdProduct.setProductCreatedTs(Util.getCurrentTs());
         createdProduct.setProductUpdatedTs(Util.getCurrentTs());
-        createdProduct.setImages(images);
-
-        Image image;
-        for(int i=0; i < 3 ; i++){
-            image = new Image();
-            image.setProductId(createdProduct.getProductId());
-            image.setUrl("www.google/image"+i+".png");
-            images.add(image);
-        }
-
 
     }
 
@@ -67,6 +54,7 @@ public class ProductRepositoryTest {
 
         shouldCreateProduct();
         shouldUpdateProduct();
+        shouldUpdateProductWithImages();
         shouldDeleteProduct();
     }
 
@@ -80,9 +68,9 @@ public class ProductRepositoryTest {
     }
 
     public void shouldDeleteProduct(){
-
-        productRepository.delete(productId);
-        Product deletedProduct = productRepository.findOne(productId);
+        Long id = createdProduct.getProductId();
+        productRepository.delete(id);
+        Product deletedProduct = productRepository.findOne(id);
         Assert.assertEquals(null,deletedProduct);
         //LOGGER.debug(deletedProduct.toString());
     }
@@ -94,6 +82,23 @@ public class ProductRepositoryTest {
         Product savedProduct = productRepository.save(createdProduct);
         Assert.assertTrue(null != savedProduct);
         Assert.assertTrue("UPDATED".equals(savedProduct.getProductDesc()));
+    }
+
+    public void shouldUpdateProductWithImages(){
+
+
+        Image image;
+        for(int i=0; i < 3 ; i++){
+            image = new Image();
+            image.setProductId(createdProduct.getProductId());
+            image.setUrl("www.google/image"+i+".png");
+            images.add(image);
+        }
+        createdProduct.setImages(images);
+
+        Product savedProduct = productRepository.save(createdProduct);
+        Assert.assertTrue(null != savedProduct);
+        Assert.assertTrue(3 ==savedProduct.getImages().size());
     }
 
     /*
