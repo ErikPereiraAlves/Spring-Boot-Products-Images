@@ -55,7 +55,7 @@ public class Image implements Serializable {
         return "Image{" +
                 "imageId='" + imageId + '\'' +
                 "url='" + url + '\'' +
-                "productId='" + productId +
+                "product='" + productId +
                 '}';
     }
 

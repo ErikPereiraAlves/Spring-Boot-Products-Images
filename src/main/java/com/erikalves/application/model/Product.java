@@ -36,7 +36,8 @@ public class Product implements Serializable {
     @Column (name = "PRODUCT_UPDATED_TS")
     private Timestamp productUpdatedTs;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
+  //  @OneToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productId")
     private Set<Image> images;
 
 
@@ -114,7 +115,8 @@ public class Product implements Serializable {
                 "productPrice='" + productPrice + '\'' +
                 "productCreatedTs='" + productCreatedTs + '\'' +
                 "productUpdatedTs='" + productUpdatedTs + '\'' +
-                "productUpdatedTs='" + productUpdatedTs +
+                "productUpdatedTs='" + productUpdatedTs + '\'' +
+                "images='" + images.toString() + '\'' +
                 '}';
     }
 }

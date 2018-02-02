@@ -38,6 +38,18 @@ Technical Specification:
 
 Solution:
 
+Few assumptions:
+    1:
+        When querying for a product and its relashionships (children products),
+    all you have to do is to search for the product_id, but using it as the product_parent_id (in the query)
+    and you will get the not only the product itself but also every other child product that might exist, in which the product_id is their product_parent_id.
+
+
+
+
+How to Run and Test:
+
+
 1- Running Spring Boot Application
 
 We can run the spring boot application using the following maven command.
