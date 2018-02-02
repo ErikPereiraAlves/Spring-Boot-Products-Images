@@ -1,10 +1,10 @@
 package com.erikalves.application.utils;
 
-public class Response<T> {
+public class RestApiResponseTo<T> {
 
     private T results;
 
-    public Response(T results) {
+    public RestApiResponseTo(T results) {
         this.results = results;
     }
 

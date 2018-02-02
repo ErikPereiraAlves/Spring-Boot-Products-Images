@@ -2,20 +2,14 @@ package com.erikalves.application.controllers;
 
 
 import com.erikalves.application.model.Image;
-import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ImageService;
-import com.erikalves.application.service.ProductService;
-import com.erikalves.application.utils.Response;
+import com.erikalves.application.utils.RestApiResponseTo;
 import com.erikalves.application.utils.Util;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 
@@ -30,23 +24,23 @@ class ImageController {
 
 
     @GetMapping(value = "/product/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response<Iterable<Image>>> getInclude(@PathVariable("product_id") String productId) {
-        return ResponseEntity.ok(new Response<>(imageService.findAllImagesByProductId(Util.LongfyId(productId))));
+    public ResponseEntity<RestApiResponseTo<Iterable<Image>>> getInclude(@PathVariable("product_id") String productId) {
+        return ResponseEntity.ok(new RestApiResponseTo<>(imageService.findAllImagesByProductId(Util.LongfyId(productId))));
     }
 
 
     //delete
     @DeleteMapping(value = "/{image_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response<String>> delete(@PathVariable("image_id") String imageId) {
+    public ResponseEntity<RestApiResponseTo<String>> delete(@PathVariable("image_id") String imageId) {
         imageService.delete(Util.LongfyId(imageId));
-        return ResponseEntity.ok(new Response<>(imageId));
+        return ResponseEntity.ok(new RestApiResponseTo<>(imageId));
     }
 
     // create
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response<Image>> create(@RequestBody Image image) {
+    public ResponseEntity<RestApiResponseTo<Image>> create(@RequestBody Image image) {
         Image savedImage = imageService.save(image);
-        return ResponseEntity.created(URI.create("/" + image.getImageId())).body(new Response<>(savedImage));
+        return ResponseEntity.created(URI.create("/" + image.getImageId())).body(new RestApiResponseTo<>(savedImage));
     }
 
 
