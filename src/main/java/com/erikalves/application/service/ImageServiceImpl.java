@@ -1,7 +1,6 @@
 package com.erikalves.application.service;
 
 import com.erikalves.application.model.Image;
-import com.erikalves.application.model.Product;
 import com.erikalves.application.repositories.ImageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +9,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service("ImageService")

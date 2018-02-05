@@ -2,8 +2,6 @@ package com.erikalves.application.repositories;
 
 import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
-import com.erikalves.application.service.ImageService;
-import com.erikalves.application.service.ProductService;
 import com.erikalves.application.utils.Util;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,9 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

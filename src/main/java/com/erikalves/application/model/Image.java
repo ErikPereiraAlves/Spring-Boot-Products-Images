@@ -1,7 +1,5 @@
 package com.erikalves.application.model;
 
-import org.hibernate.annotations.Parent;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
