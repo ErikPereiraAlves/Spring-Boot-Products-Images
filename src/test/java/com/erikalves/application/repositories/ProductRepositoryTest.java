@@ -122,7 +122,7 @@ public class ProductRepositoryTest {
     @Test
     public void shouldFindProductIncludingRelationships(){
 
-        List <Product> list = productRepository.findAllChildrenProductsByProductParentId(1l); // product 1 is a parent, created by data.sql
+        List <Product> list = productRepository.findProductIncludingRelationships(1l); // product 1 is a parent, created by data.sql
 
         for(Product product : list){
             LOGGER.debug(" *** RESULT *** {}",product.toString());

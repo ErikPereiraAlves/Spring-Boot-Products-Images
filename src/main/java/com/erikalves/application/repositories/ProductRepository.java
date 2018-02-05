@@ -12,8 +12,11 @@ import java.util.List;
 @Repository
 public interface ProductRepository  extends JpaRepository<Product, Long> {
 
+    //finds itself and its childreen projects
+    @Query("SELECT p FROM Product p where p.productParentId = :productId or p.productId = :productId")
+    List<Product> findProductIncludingRelationships(@Param("productId") Long id);
 
-    @Query("SELECT p FROM Product p where p.productParentId = :productParentId")
-    List<Product> findAllChildrenProductsByProductParentId(@Param("productParentId") Long id);
+    @Query("SELECT p FROM Product p where p.productParentId = :productId  and p.productId != :productId")
+    List<Product> findProductRelationships(@Param("productId") Long id);
 
 }

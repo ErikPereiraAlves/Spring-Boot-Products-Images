@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAllChildrenProductsByProductParentId(Long id) {
-        return productRepository.findAllChildrenProductsByProductParentId(id);
+    public List<Product> findProductIncludingRelationships(Long id) {
+        return productRepository.findProductIncludingRelationships(id);
     }
+
+    @Override
+    public List<Product> findProductRelationships(Long id) {
+        return productRepository.findProductRelationships(id);
+    }
+
+
 }

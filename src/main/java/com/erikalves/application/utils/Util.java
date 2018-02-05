@@ -101,8 +101,8 @@ public class Util {
         return Long.toString(id);
     }
 
-    public static Long LongfyId(String id){
-
-        return Long.getLong(id);
+    public static long LongfyId(String str){
+        long number = Long.parseLong(str);
+        return number;
     }
 }

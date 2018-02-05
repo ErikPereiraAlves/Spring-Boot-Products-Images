@@ -2,7 +2,6 @@ package com.erikalves.application.service;
 
 import com.erikalves.application.exceptions.ApplicationException;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 

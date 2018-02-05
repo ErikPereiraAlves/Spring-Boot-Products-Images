@@ -1,9 +1,11 @@
 package com.erikalves.application.model;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
+import javax.persistence.*;
 
 @Entity
 @Table(name="PRODUCT")
@@ -35,10 +37,11 @@ public class Product implements Serializable {
     @Column (name = "PRODUCT_UPDATED_TS")
     private Timestamp productUpdatedTs;
 
-  //  @OneToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productId")
     private Set<Image> images;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productParentId")
+    private Set<Product> products;
 
     public Long getProductId() {
         return productId;
@@ -104,6 +107,14 @@ public class Product implements Serializable {
         this.images = images;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -115,7 +126,8 @@ public class Product implements Serializable {
                 "productCreatedTs='" + productCreatedTs + '\'' +
                 "productUpdatedTs='" + productUpdatedTs + '\'' +
                 "productUpdatedTs='" + productUpdatedTs + '\'' +
-                "images='" + images.toString() + '\'' +
+                "images='" +(images!=null ?images.toString(): "not included") + '\'' +
+                "products='" +(products!=null ?products.toString(): "not included") + '\'' +
                 '}';
     }
 }
