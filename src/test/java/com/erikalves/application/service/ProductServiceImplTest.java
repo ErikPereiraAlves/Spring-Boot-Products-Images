@@ -21,8 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@RunWith(SpringJUnit4ClassRunner.class)
 public class ProductServiceImplTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImplTest.class);

@@ -45,6 +45,11 @@ Few assumptions:
     and you will get the not only the product itself but also every other child product that might exist, in which the product_id is their product_parent_id.
 
 
+    2:
+        I created the tables a bit different. For both Product and Image, there are more columns. For image specifically i used a column called url for the image's location.
+        And didn't use the column Type. The reason is that I only saw the DER from the recruiters email afterwards. But i strongly believe my solution is even more complete than
+        the required example.
+
 
 
 How to Run and Test:
@@ -55,6 +60,10 @@ How to Run and Test:
 We can run the spring boot application using the following maven command.
 
     mvn spring-boot:run
+
+Run tests:
+    mvn test
+
 
 2- H2 Web Console
 
