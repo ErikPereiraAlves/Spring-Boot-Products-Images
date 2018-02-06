@@ -26,7 +26,6 @@ class ProductController {
     private ProductServiceImpl productService;
 
 
-
     @GetMapping(value = "/exclude", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestApiResponseTo<Iterable<Object>>> findAllExclude() {
         return ResponseEntity.ok(new RestApiResponseTo<>(productService.findAllExcludingRelationships()));
@@ -42,7 +41,6 @@ class ProductController {
     public ResponseEntity<String>  getExclude(@PathVariable("product_id") String productId) {
         Object product =productService.findProductExcludingRelationships(Util.LongfyId(productId));
         String json = new Gson().toJson(product);
-        LOGGER.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> JSON {}",json);
         return ResponseEntity.ok(json);
     }
 
