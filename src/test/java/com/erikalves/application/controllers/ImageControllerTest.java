@@ -1,5 +1,6 @@
 package com.erikalves.application.controllers;
 
+import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ImageService;
 import com.erikalves.application.service.ProductService;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,6 +51,8 @@ public class ImageControllerTest {
 
     Product savedProduct;
 
+    Image savedImage;
+
 
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
@@ -57,6 +62,7 @@ public class ImageControllerTest {
     @Before
     public void init() {
         createTestProduct();
+        createTestImage();
     }
 
     private void createTestProduct() {
@@ -70,6 +76,13 @@ public class ImageControllerTest {
         savedProduct = productService.save(product);
         productJson = new Gson().toJson(savedProduct);
         LOGGER.debug("Json representation of a the created Product {} ", productJson);
+    }
+
+    private void createTestImage(){
+        Image image = new Image();
+        image.setProductId(2l);
+        image.setUrl("www.post-test.com/image.png");
+        savedImage = imageService.save(image);
     }
 
     @Test
@@ -95,9 +108,28 @@ public class ImageControllerTest {
 
     @Test
     public void create() {
+
+        Image image = new Image();
+        image.setProductId(2l);
+        image.setUrl("www.post-test.com/image.png");
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(createURLWithPort("/store/api/v1/images/") , image, String.class);
+
+        LOGGER.debug("Response results {}",responseEntity.getBody().toString());
+        Assert.assertNotNull(responseEntity);
     }
 
     @Test
     public void update() {
+
+        Long imageId = savedImage.getImageId();
+        savedImage.setUrl("UPDATED");
+        restTemplate.put(createURLWithPort("/store/api/v1/images/") , savedImage, String.class);
+
+        Image updatedImage = imageService.get(imageId);
+        Assert.assertNotNull(updatedImage);
+        Assert.assertEquals(updatedImage.getImageId() , imageId);
+        LOGGER.debug("Response results {}",updatedImage.getUrl());
+
     }
 }

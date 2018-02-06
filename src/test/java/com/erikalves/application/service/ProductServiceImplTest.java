@@ -51,7 +51,6 @@ public class ProductServiceImplTest {
         LOGGER.debug("saved product ID {}",savedProduct.getProductId());
         Assert.assertNotNull(savedProduct.getProductId());
 
-
     }
 
     @Test

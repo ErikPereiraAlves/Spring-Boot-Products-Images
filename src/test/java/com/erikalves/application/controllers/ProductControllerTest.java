@@ -1,5 +1,6 @@
 package com.erikalves.application.controllers;
 
+import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ProductService;
 import com.erikalves.application.utils.Util;
@@ -126,21 +127,31 @@ public class ProductControllerTest {
     public void shouldDeleteProduct() {
 
         restTemplate.delete(createURLWithPort("/store/api/v1/products/"+savedProduct.getProductId()));
-
         Product deletedProduct = productService.get(savedProduct.getProductId());
-
         LOGGER.debug("Response results {}",deletedProduct);
-
 
     }
 
     @Test
     public void shouldCreateProduct() {
 
+        createTestProduct();
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(createURLWithPort("/store/api/v1/products") , savedProduct, String.class);
+        LOGGER.debug("Response results {}",responseEntity.getBody().toString());
+        Assert.assertNotNull(responseEntity);
 
     }
 
     @Test
     public void shouldUpdateProduct() {
+
+        Long productId = savedProduct.getProductId();
+        savedProduct.setProductDesc("UPDATED BY TEST");
+        restTemplate.put(createURLWithPort("/store/api/v1/products") , savedProduct, String.class);
+
+        Product updatedProduct = productService.get(productId);
+        Assert.assertNotNull(updatedProduct);
+        Assert.assertEquals(updatedProduct.getProductId() , productId);
+        LOGGER.debug("Response results {}",updatedProduct.getProductDesc());
     }
 }
