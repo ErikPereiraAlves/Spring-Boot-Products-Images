@@ -38,14 +38,9 @@ Technical Specification:
 
 Solution:
 
-Few assumptions:
-    1:
-        When querying for a product and its relashionships (children products),
-    all you have to do is to search for the product_id, but using it as the product_parent_id (in the query)
-    and you will get the not only the product itself but also every other child product that might exist, in which the product_id is their product_parent_id.
+Stack applied: Spring boot maven application using embedded H2 database.
 
-
-    2:
+Please note:
         I created the tables a bit different. For both Product and Image, there are more columns. For image specifically i used a column called url for the image's location.
         And didn't use the column Type. The reason is that I only saw the DER from the recruiters email afterwards. But i strongly believe my solution is even more complete than
         the required example.

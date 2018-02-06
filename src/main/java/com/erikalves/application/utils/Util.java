@@ -6,6 +6,8 @@ import com.erikalves.application.model.Product;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
+import com.google.gson.JsonArray;
+import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,8 +103,23 @@ public class Util {
         return Long.toString(id);
     }
 
-    public static long LongfyId(String str){
+    public static Long LongfyId(String str){
         long number = Long.parseLong(str);
         return number;
+    }
+
+    public static String toJson(Object object){
+        String json = new Gson().toJson(object);
+
+        return json;
+
+    }
+
+    public static JSONArray toJsonArray(Object object){
+
+        String json = toJson(object);
+       JSONArray array = new JSONArray(json);
+        return array;
+
     }
 }

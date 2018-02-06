@@ -3,6 +3,10 @@ package com.erikalves.application.repositories;
 import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
 import com.erikalves.application.utils.Util;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +28,7 @@ public class ProductRepositoryTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductRepositoryTest.class);
 
-    @Autowired (required=true)
+    @Autowired(required = true)
     ProductRepository productRepository;
 
     Product createdProduct;
@@ -32,7 +36,7 @@ public class ProductRepositoryTest {
     Set<Image> images = new HashSet<>();
 
     @Before
-    public void  begin(){
+    public void begin() {
 
         createdProduct = new Product();
         createdProduct.setProductParentId(1l);
@@ -46,7 +50,7 @@ public class ProductRepositoryTest {
 
 
     @Test
-    public void shouldCreateUpdateDeleteProduct(){
+    public void shouldCreateUpdateDeleteProduct() {
 
         shouldCreateProduct();
         shouldUpdateProduct();
@@ -54,25 +58,25 @@ public class ProductRepositoryTest {
         shouldDeleteProduct();
     }
 
-    public void shouldCreateProduct(){
+    public void shouldCreateProduct() {
 
-       Product savedProduct = productRepository.save(createdProduct);
-       LOGGER.debug("saved product ID {}",savedProduct);
-       Assert.assertNotNull(savedProduct.getProductId());
+        Product savedProduct = productRepository.save(createdProduct);
+        LOGGER.debug("saved product ID {}", savedProduct);
+        Assert.assertNotNull(savedProduct.getProductId());
 
     }
 
-    public void shouldDeleteProduct(){
+    public void shouldDeleteProduct() {
 
         Long id = createdProduct.getProductId();
         productRepository.delete(id);
         Product deletedProduct = productRepository.findOne(id);
-        Assert.assertEquals(null,deletedProduct);
+        Assert.assertEquals(null, deletedProduct);
 
     }
 
 
-    public void shouldUpdateProduct(){
+    public void shouldUpdateProduct() {
 
         createdProduct.setProductDesc("UPDATED");
         Product savedProduct = productRepository.save(createdProduct);
@@ -80,63 +84,72 @@ public class ProductRepositoryTest {
         Assert.assertTrue("UPDATED".equals(savedProduct.getProductDesc()));
     }
 
-    public void shouldUpdateProductWithImages(){
+    public void shouldUpdateProductWithImages() {
 
 
         Image image;
-        for(int i=0; i < 3 ; i++){
+        for (int i = 0; i < 3; i++) {
             image = new Image();
             image.setProductId(createdProduct.getProductId());
-            image.setUrl("www.google/image"+i+".png");
+            image.setUrl("www.google/image" + i + ".png");
             images.add(image);
         }
         createdProduct.setImages(images);
 
         Product savedProduct = productRepository.save(createdProduct);
         Assert.assertTrue(null != savedProduct);
-        Assert.assertTrue(3 ==savedProduct.getImages().size());
+        Assert.assertTrue(3 == savedProduct.getImages().size());
     }
 
 
     @Test
-    public void shouldFindAllProductsExcludingRelationships(){
+    public void findProductIncludingRelationships() {
+
+
+        List<Product> list = productRepository.findProductIncludingRelationships(3l);
+        Assert.assertTrue(null != list);
+        for (Product product : list) {
+            Assert.assertTrue(null != product);
+            LOGGER.debug(" *** RESULT *** {}", product.toString());
+        }
+    }
+
+    @Test
+    public void findProductExcludingRelationships() {
+
+        //Product product = productRepository.findProductExcludingRelationships(3l);
+        Object product = productRepository.findProductExcludingRelationships(3l);
+        String json = Util.toJson(product);
+        Assert.assertTrue(null != json);
+        LOGGER.debug(" *** RESULT *** {}", json);
+    }
+
+
+    @Test
+    public void findAllIncludingRelationships() throws JSONException {
+
 
         List<Product> list = productRepository.findAll();
-
-        for(Product product : list){
-            LOGGER.debug(" *** RESULT *** {}",product.toString());
+        Assert.assertTrue(null != list);
+        for(Product product: list){
+           LOGGER.debug(" *** RESULT *** {}", product.toString());
         }
 
-        Assert.assertTrue(list.size() > 0);
+        JSONArray array = Util.toJsonArray(list);
+        LOGGER.debug(" *** RESULT *** {}", array);
+
     }
 
     @Test
-    public void shouldFindAllProductsIncludingRelationships(){
+    public void findAllExcludingRelationships() throws JSONException {
 
-
-
-    }
-
-
-    //Get specific product including its specified relationships (child product and/or images)
-    @Test
-    public void shouldFindProductIncludingRelationships(){
-
-        List <Product> list = productRepository.findProductIncludingRelationships(1l); // product 1 is a parent, created by data.sql
-
-        for(Product product : list){
-            LOGGER.debug(" *** RESULT *** {}",product.toString());
-        }
-    }
-
-    //Get specific product excluding its specified relationships (child product and/or images)
-    @Test
-    public void shouldFindProductExcludingRelationships() {
-
-        Product productNoRelationship = productRepository.findOne(3l);
-        LOGGER.debug(" *** RESULT *** {}",productNoRelationship.toString());
-
+        String json;
+        List<Object> list = productRepository.findAllExcludingRelationships();
+        Assert.assertTrue(null != list);
+        JSONArray array = Util.toJsonArray(list);
+        LOGGER.debug(" *** RESULT *** {}", array);
 
     }
+
 
 }

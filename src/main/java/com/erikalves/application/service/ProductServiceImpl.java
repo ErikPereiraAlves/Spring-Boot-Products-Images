@@ -25,8 +25,6 @@ public class ProductServiceImpl implements ProductService {
         return entity.getProductId();
     }
 
-
-
     @Override
     public CrudRepository<Product, Long> getRepository() {
         return this.productRepository;
@@ -40,6 +38,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> findProductRelationships(Long id) {
         return productRepository.findProductRelationships(id);
+    }
+
+    @Override
+    public List<Object> findAllExcludingRelationships() {
+        return productRepository.findAllExcludingRelationships();
+    }
+
+    @Override
+    public Object findProductExcludingRelationships(Long id) {
+         return productRepository.findProductExcludingRelationships(id);
     }
 
 

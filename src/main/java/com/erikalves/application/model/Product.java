@@ -43,6 +43,7 @@ public class Product implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productParentId")
     private Set<Product> products;
 
+
     public Long getProductId() {
         return productId;
     }
@@ -125,9 +126,7 @@ public class Product implements Serializable {
                 "productPrice='" + productPrice + '\'' +
                 "productCreatedTs='" + productCreatedTs + '\'' +
                 "productUpdatedTs='" + productUpdatedTs + '\'' +
-                "productUpdatedTs='" + productUpdatedTs + '\'' +
-                "images='" +(images!=null ?images.toString(): "not included") + '\'' +
-                "products='" +(products!=null ?products.toString(): "not included") + '\'' +
+
                 '}';
     }
 }

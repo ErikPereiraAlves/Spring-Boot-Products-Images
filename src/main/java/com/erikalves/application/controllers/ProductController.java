@@ -3,8 +3,10 @@ package com.erikalves.application.controllers;
 
 import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ProductService;
+import com.erikalves.application.service.ProductServiceImpl;
 import com.erikalves.application.utils.RestApiResponseTo;
 import com.erikalves.application.utils.Util;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,49 +15,43 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 
 @RestController
-@RequestMapping("/store/api/1/products")
+@RequestMapping("/store/api/v1/products")
 class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productService;
 
 
 
     @GetMapping(value = "/exclude", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestApiResponseTo<Iterable<Product>>> findAllExclude() {
-        Iterable<Product> products = productService.findAll();
-        for(Product product : products){
-            product.setProducts(null);
-        }
-
-        return ResponseEntity.ok(new RestApiResponseTo<>(products));
+    public ResponseEntity<RestApiResponseTo<Iterable<Object>>> findAllExclude() {
+        return ResponseEntity.ok(new RestApiResponseTo<>(productService.findAllExcludingRelationships()));
     }
 
     @GetMapping(value = "/include", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestApiResponseTo<Iterable<Product>>> findAllInclude() {
-        Iterable<Product> products = productService.findAll();
-        return ResponseEntity.ok(new RestApiResponseTo<>(products));
+        return ResponseEntity.ok(new RestApiResponseTo<>(productService.findAll()));
     }
 
 
     @GetMapping(value = "/exclude/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestApiResponseTo<Product>>  getExclude(@PathVariable("product_id") String productId) {
-        LOGGER.debug("[ProductController] product id "+productId);
-        Product product = productService.get(Util.LongfyId(productId));
-        LOGGER.debug("[ProductController] found following product excluding its relationships {} ",product.toString());
-        return ResponseEntity.ok(new RestApiResponseTo<>(product));
+    public ResponseEntity<String>  getExclude(@PathVariable("product_id") String productId) {
+        Object product =productService.findProductExcludingRelationships(Util.LongfyId(productId));
+        String json = new Gson().toJson(product);
+        LOGGER.debug(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> JSON {}",json);
+        return ResponseEntity.ok(json);
     }
 
     @GetMapping(value = "/include/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestApiResponseTo<Iterable<Product>>> getInclude(@PathVariable("product_id") String productId) {
-
         return ResponseEntity.ok(new RestApiResponseTo<>(productService.findProductIncludingRelationships(Util.LongfyId(productId))));
     }
 

@@ -8,19 +8,19 @@ import java.io.Serializable;
 public interface GenericService<T, ID extends Serializable> {
 
 
-    public default Iterable<T> findAll() {
+     default Iterable<T> findAll() {
         return getRepository().findAll();
     }
 
-    public default T get(ID id) {
+     default T get(ID id) {
         return getRepository().findOne(id);
     }
 
-    public default T save(T entity) {
+     default T save(T entity) {
         return getRepository().save(entity);
     }
 
-    public default void delete(ID id) {
+     default void delete(ID id) {
         if (getRepository().exists(id)) {
             getRepository().delete(id);
         }
@@ -29,7 +29,7 @@ public interface GenericService<T, ID extends Serializable> {
         }
     }
 
-    public default void update(T entity) {
+     default void update(T entity) {
         if (getRepository().exists(getId(entity))) {
             getRepository().save(entity);
         }
@@ -38,7 +38,7 @@ public interface GenericService<T, ID extends Serializable> {
         }
     }
 
-    public ID getId(T entity);
+     ID getId(T entity);
 
-    public CrudRepository<T, ID> getRepository();
+     CrudRepository<T, ID> getRepository();
 }
