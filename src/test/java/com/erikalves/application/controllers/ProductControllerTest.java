@@ -132,6 +132,14 @@ public class ProductControllerTest {
 
     @Test
     public void shouldDeleteProduct() {
+
+        restTemplate.delete(createURLWithPort("/store/api/v1/products/"+savedProduct.getProductId()));
+
+        Product deletedProduct = productService.get(savedProduct.getProductId());
+
+        LOGGER.debug("Response results {}",deletedProduct);
+
+
     }
 
     @Test
