@@ -62,4 +62,4 @@ Run tests:
 
 2- H2 Web Console
 
-    I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console  (user id:  erik )
+    I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console  (user id:  ac )
