@@ -1,11 +1,11 @@
 package com.erikalves.application.model;
 
-import java.io.Serializable;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Set;
 
 @Entity
 @Table(name="PRODUCT")
@@ -31,9 +31,11 @@ public class Product implements Serializable {
     @Column (name = "PRODUCT_PRICE")
     private Double productPrice;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column (name = "PRODUCT_CREATED_TS")
     private Timestamp productCreatedTs;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column (name = "PRODUCT_UPDATED_TS")
     private Timestamp productUpdatedTs;
 

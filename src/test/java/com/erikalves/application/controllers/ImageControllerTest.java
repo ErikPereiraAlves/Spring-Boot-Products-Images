@@ -1,6 +1,7 @@
 package com.erikalves.application.controllers;
 
 import com.erikalves.application.model.Product;
+import com.erikalves.application.service.ImageService;
 import com.erikalves.application.service.ProductService;
 import com.erikalves.application.utils.Util;
 import com.google.gson.Gson;
@@ -21,10 +22,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProductControllerTest {
+public class ImageControllerTest {
 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductControllerTest.class);
@@ -37,6 +37,10 @@ public class ProductControllerTest {
     HttpHeaders headers = new HttpHeaders();
 
     @Autowired
+    @Qualifier(value = "ImageService")
+    ImageService imageService;
+
+    @Autowired
     @Qualifier(value = "ProductService")
     ProductService productService;
 
@@ -44,9 +48,11 @@ public class ProductControllerTest {
 
     Product savedProduct;
 
+
     private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
+
 
     @Before
     public void init() {
@@ -66,81 +72,32 @@ public class ProductControllerTest {
         LOGGER.debug("Json representation of a the created Product {} ", productJson);
     }
 
-
     @Test
-    public void shouldFindAllProductsExcludingRelationships() {
+    public void getInclude() {
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/store/api/v1/products/exclude"),
+                createURLWithPort("/store/api/v1/images/product/"+2),
                 HttpMethod.GET,entity,String.class);
 
         LOGGER.debug("Response results {}",response.getBody());
         Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
-
     }
 
     @Test
-    public void shouldFindAllProductsIncludingRelationships() {
-
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/store/api/v1/products/include"),
-                HttpMethod.GET,entity,String.class);
-
-        LOGGER.debug("Response results {}",response.getBody());
-        Assert.assertTrue(response.getBody().contains("\"productId\":1"));
-    }
-
-
-    @Test
-    public void shouldGetProductExcludingRelationships() {
-
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/store/api/v1/products/exclude/1"),
-                HttpMethod.GET,entity,String.class);
-
-        LOGGER.debug("Response results {}",response.getBody());
-        Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
-
-    }
-
-    @Test
-    public void shouldGetProductIncludingRelationships() {
-
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-
-        ResponseEntity<String> response = restTemplate.exchange(
-                createURLWithPort("/store/api/v1/products/include/1"),
-                HttpMethod.GET,entity,String.class);
-
-        LOGGER.debug("Response results {}",response.getBody());
-        Assert.assertTrue(response.getBody().contains("\"productId\":1"));
-    }
-
-    @Test
-    public void shouldDeleteProduct() {
+    public void delete() {
 
         restTemplate.delete(createURLWithPort("/store/api/v1/products/"+savedProduct.getProductId()));
-
         Product deletedProduct = productService.get(savedProduct.getProductId());
-
         LOGGER.debug("Response results {}",deletedProduct);
-
-
     }
 
     @Test
-    public void shouldCreateProduct() {
-
-
+    public void create() {
     }
 
     @Test
-    public void shouldUpdateProduct() {
+    public void update() {
     }
 }

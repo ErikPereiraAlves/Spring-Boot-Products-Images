@@ -65,9 +65,7 @@ public class ProductServiceImplTest {
     public void getRepository() {
 
         CrudRepository<Product, Long> crudRepository = productService.getRepository();
-
         Assert.assertNotNull(crudRepository);
-
         Assert.assertTrue(EqualsBuilder.reflectionEquals(productRepository,crudRepository));
     }
 
@@ -75,9 +73,7 @@ public class ProductServiceImplTest {
     public void findAllChildrenProductsByProductParentId() {
 
         List<Product> list = productService.findProductIncludingRelationships(savedProduct.getProductParentId());
-
         Assert.assertNotNull(list);
-
         Assert.assertTrue(list.size() >0);
 
     }

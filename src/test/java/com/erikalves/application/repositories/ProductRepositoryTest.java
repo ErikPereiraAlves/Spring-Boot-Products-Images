@@ -3,10 +3,7 @@ package com.erikalves.application.repositories;
 import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
 import com.erikalves.application.utils.Util;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -126,22 +123,21 @@ public class ProductRepositoryTest {
 
 
     @Test
-    public void findAllIncludingRelationships() throws JSONException {
-
+    public void findAllIncludingRelationships()  {
 
         List<Product> list = productRepository.findAll();
+
         Assert.assertTrue(null != list);
         for(Product product: list){
+            Assert.assertTrue(null != product);
+            Assert.assertTrue(null != product.getProductId());
            LOGGER.debug(" *** RESULT *** {}", product.toString());
         }
-
-        JSONArray array = Util.toJsonArray(list);
-        LOGGER.debug(" *** RESULT *** {}", array);
 
     }
 
     @Test
-    public void findAllExcludingRelationships() throws JSONException {
+    public void findAllExcludingRelationships() {
 
         String json;
         List<Object> list = productRepository.findAllExcludingRelationships();
@@ -150,6 +146,5 @@ public class ProductRepositoryTest {
         LOGGER.debug(" *** RESULT *** {}", array);
 
     }
-
 
 }

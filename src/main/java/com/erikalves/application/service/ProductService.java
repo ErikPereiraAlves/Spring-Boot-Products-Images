@@ -2,7 +2,6 @@ package com.erikalves.application.service;
 
 
 import com.erikalves.application.model.Product;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

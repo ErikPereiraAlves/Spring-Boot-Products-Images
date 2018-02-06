@@ -56,8 +56,6 @@ public class ImageRepositoryTest {
             imageList.add(image);
         }
 
-
-
     }
 
     public Product createTestProduct(){

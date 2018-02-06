@@ -73,12 +73,10 @@ public class ImageServiceImplTest {
         image.setProductId(savedProduct.getProductId());
         savedImage = imageService.save(image);
 
-
     }
 
     @Test
     public void getId() {
-
 
         Long imageId = imageService.getId(savedImage);
         Assert.assertNotNull(imageId);
@@ -88,9 +86,7 @@ public class ImageServiceImplTest {
     public void getRepository() {
 
         CrudRepository<Image, Long> crudRepository = imageService.getRepository();
-
         Assert.assertNotNull(crudRepository);
-
         Assert.assertTrue(EqualsBuilder.reflectionEquals(imageRepository, crudRepository));
     }
 
@@ -98,9 +94,7 @@ public class ImageServiceImplTest {
     public void findAllImagesByProductId() {
 
         List<Image> list = imageService.findAllImagesByProductId(savedProduct.getProductId());
-
         Assert.assertNotNull(list);
-
         Assert.assertTrue(list.size() > 0);
     }
 }

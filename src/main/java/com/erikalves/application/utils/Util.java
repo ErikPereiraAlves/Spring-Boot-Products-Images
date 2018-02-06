@@ -6,7 +6,6 @@ import com.erikalves.application.model.Product;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
-import com.google.gson.JsonArray;
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +105,13 @@ public class Util {
     public static Long LongfyId(String str){
         long number = Long.parseLong(str);
         return number;
+    }
+
+    public static String toJson(Product object){
+        String json = new Gson().toJson(object);
+
+        return json;
+
     }
 
     public static String toJson(Object object){

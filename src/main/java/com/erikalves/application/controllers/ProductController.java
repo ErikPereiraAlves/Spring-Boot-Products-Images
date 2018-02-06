@@ -2,22 +2,18 @@ package com.erikalves.application.controllers;
 
 
 import com.erikalves.application.model.Product;
-import com.erikalves.application.service.ProductService;
 import com.erikalves.application.service.ProductServiceImpl;
 import com.erikalves.application.utils.RestApiResponseTo;
 import com.erikalves.application.utils.Util;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 
 @RestController
