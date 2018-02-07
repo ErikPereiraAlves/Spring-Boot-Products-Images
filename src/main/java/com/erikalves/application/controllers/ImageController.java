@@ -25,12 +25,26 @@ class ImageController {
 
 
     @GetMapping(value = "/product/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestApiResponseTo<Iterable<Image>>> getInclude(@PathVariable("product_id") String productId) {
+    public ResponseEntity<RestApiResponseTo<Iterable<Image>>> getProductImages(@PathVariable("product_id") String productId) {
 
         Iterable <Image> images =imageService.findAllImagesByProductId(Util.LongfyId(productId));
 
         if(null!=images && images.spliterator().getExactSizeIfKnown() >0) {
             return ResponseEntity.ok(new RestApiResponseTo<>(images));
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+    @GetMapping(value = "/{image_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestApiResponseTo<Image>> getImage(@PathVariable("image_id") String imageId) {
+
+        Image image =imageService.get(Util.LongfyId(imageId));
+
+        if(null!=image) {
+            return ResponseEntity.ok(new RestApiResponseTo<>(image));
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
