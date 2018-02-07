@@ -51,6 +51,7 @@ Technical Specification:
             INSERT INTO PRODUCT (PRODUCT_ID, PRODUCT_PARENT_ID, PRODUCT_NAME,PRODUCT_DESC,PRODUCT_PRICE,PRODUCT_CREATED_TS,PRODUCT_UPDATED_TS)
             VALUES (1,null,'Apple Iphone','Apple Smartphones', 0.0,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP());
 
+
 * How to Run and Test:
 
 
@@ -71,6 +72,10 @@ Technical Specification:
 3- Integration test thru Postman
 
     3.1 - Product(s)
+
+    * URI containing  .../exclude/..  means results with no children relationship
+
+    * URI containing .../include/.. means results with children relationship
 
     GET:
         http://localhost:8080/store/api/v1/products/exclude                     (Gets all products excluding relationships)
@@ -93,6 +98,8 @@ Technical Specification:
     GET:
         http://localhost:8080/store/api/v1/images/product/{product_id}          (Get all images for a given product)
 
+        http://localhost:8080/store/api/v1/images/{image_id}                    (Get specific image by its id)
+
     POST:
         http://localhost:8080/store/api/v1/images/
 
@@ -100,5 +107,5 @@ Technical Specification:
         http://localhost:8080/store/api/v1/images/
 
     DELETE:
-        http://localhost:8080/store/api/v1/images//{image_id}
+        http://localhost:8080/store/api/v1/images/{image_id}
 
