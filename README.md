@@ -70,25 +70,39 @@ Run tests:
 
     GET:
 
-        http://localhost:8080/store/api/v1/products/exclude
+        http://localhost:8080/store/api/v1/products/exclude                     (Gets all products excluding relationships)
 
-        http://localhost:8080/store/api/v1/products/include
+        http://localhost:8080/store/api/v1/products/include                     (Gets all products including relationships)
 
-        http://localhost:8080/store/api/v1/products/exclude/{product_id}
+        http://localhost:8080/store/api/v1/products/exclude/{product_id}        (Gets specific product excluding relationships)
 
-        http://localhost:8080/store/api/v1/products/include/{product_id}
+        http://localhost:8080/store/api/v1/products/include/{product_id}        (Gets specific product including relationships)
 
     POST:
+        http://localhost:8080/store/api/v1/products/
 
     PUT:
+        http://localhost:8080/store/api/v1/products/
 
     DELETE:
 
+         http://localhost:8080/store/api/v1/products/{product_id}
 
 
     3.2 - Image(s)
 
-    http://localhost:8080/store/api/v1/
+    GET:
 
-    http://localhost:8080/store/api/v1/
+        http://localhost:8080/store/api/v1/images/product/{product_id}          (Get all images for a given product)
+
+    POST:
+
+        http://localhost:8080/store/api/v1/images/
+
+    PUT:
+        http://localhost:8080/store/api/v1/images/
+
+    DELETE:
+
+        http://localhost:8080/store/api/v1/images//{image_id}
 
