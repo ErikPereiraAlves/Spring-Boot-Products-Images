@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -45,6 +46,19 @@ public class Product implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productParentId")
     private Set<Product> products;
 
+    public Product() {
+    }
+
+    public Product(Long productId, Long productParentId, String productName, String productDesc, Double productPrice, Date productCreatedTs, Date productUpdatedTs) {
+        this.productId = productId;
+        this.productParentId = productParentId;
+        this.productName = productName;
+        this.productDesc = productDesc;
+        this.productPrice = productPrice;
+        this.productCreatedTs = new java.sql.Timestamp(productCreatedTs.getTime());
+        this.productUpdatedTs =  new java.sql.Timestamp(productUpdatedTs.getTime()); ;
+
+    }
 
     public Long getProductId() {
         return productId;

@@ -62,4 +62,33 @@ Run tests:
 
 2- H2 Web Console
 
-    I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console  (user id:  ac )
+    I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console  (user id:<ac> )
+
+3- Integration test thru Postman
+
+    3.1 - Product(s)
+
+    GET:
+
+        http://localhost:8080/store/api/v1/products/exclude
+
+        http://localhost:8080/store/api/v1/products/include
+
+        http://localhost:8080/store/api/v1/products/exclude/{product_id}
+
+        http://localhost:8080/store/api/v1/products/include/{product_id}
+
+    POST:
+
+    PUT:
+
+    DELETE:
+
+
+
+    3.2 - Image(s)
+
+    http://localhost:8080/store/api/v1/
+
+    http://localhost:8080/store/api/v1/
+

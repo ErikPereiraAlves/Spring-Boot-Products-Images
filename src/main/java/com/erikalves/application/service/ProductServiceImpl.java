@@ -41,12 +41,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Object> findAllExcludingRelationships() {
+    public List<Product> findAllExcludingRelationships() {
         return productRepository.findAllExcludingRelationships();
     }
 
     @Override
-    public Object findProductExcludingRelationships(Long id) {
+    public Product findProductExcludingRelationships(Long id) {
          return productRepository.findProductExcludingRelationships(id);
     }
 

@@ -86,7 +86,7 @@ public class ImageControllerTest {
     }
 
     @Test
-    public void getInclude() {
+    public void shouldGetImagesProduct() {
 
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
 
@@ -99,15 +99,16 @@ public class ImageControllerTest {
     }
 
     @Test
-    public void delete() {
+    public void shouldDeleteImage() {
 
-        restTemplate.delete(createURLWithPort("/store/api/v1/products/"+savedProduct.getProductId()));
-        Product deletedProduct = productService.get(savedProduct.getProductId());
-        LOGGER.debug("Response results {}",deletedProduct);
+        restTemplate.delete(createURLWithPort("/store/api/v1/images/"+savedImage.getImageId()));
+        Image deletedImage = imageService.get(savedImage.getImageId());
+        LOGGER.debug("Response results {}",deletedImage);
+        Assert.assertNull(deletedImage);
     }
 
     @Test
-    public void create() {
+    public void shouldCreateImage() {
 
         Image image = new Image();
         image.setProductId(2l);
@@ -120,7 +121,7 @@ public class ImageControllerTest {
     }
 
     @Test
-    public void update() {
+    public void shouldUpdateImage() {
 
         Long imageId = savedImage.getImageId();
         savedImage.setUrl("UPDATED");

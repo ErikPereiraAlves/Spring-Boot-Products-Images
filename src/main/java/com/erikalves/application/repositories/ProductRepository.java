@@ -21,10 +21,11 @@ public interface ProductRepository  extends JpaRepository<Product, Long> {
     List<Product> findProductRelationships(@Param("productId") Long id);
 
     //find all products, but excluding its children products.
-    @Query("SELECT p.productId, p.productParentId, p.productName, p.productDesc,p.productPrice,p.productCreatedTs,p.productUpdatedTs FROM Product p ")
-    List<Object> findAllExcludingRelationships();
+    @Query("SELECT new com.erikalves.application.model.Product(p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs) FROM Product p ")
+    List<Product> findAllExcludingRelationships();
 
     //find product, but excluding its children products.
-    @Query("SELECT distinct p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs FROM Product p WHERE  p.productId = :productId ")
-    Object findProductExcludingRelationships(@Param("productId") Long id);
+   // @Query("SELECT distinct p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs FROM Product p WHERE  p.productId = :productId ")
+    @Query("select new com.erikalves.application.model.Product(p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs) FROM Product p WHERE  p.productId = :productId")
+    Product findProductExcludingRelationships(@Param("productId") Long id);
 }

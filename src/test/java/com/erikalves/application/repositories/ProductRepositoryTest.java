@@ -140,8 +140,8 @@ public class ProductRepositoryTest {
     public void findAllExcludingRelationships() {
 
         String json;
-        List<Object> list = productRepository.findAllExcludingRelationships();
-        Assert.assertTrue(null != list);
+        List<Product> list = productRepository.findAllExcludingRelationships();
+        Assert.assertTrue(null != list && list.size()>0);
         JSONArray array = Util.toJsonArray(list);
         LOGGER.debug(" *** RESULT *** {}", array);
 

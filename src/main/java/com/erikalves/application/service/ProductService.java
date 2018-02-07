@@ -13,7 +13,7 @@ public interface ProductService extends GenericService <Product,Long>{
 
     List<Product> findProductRelationships(Long id);
 
-    List<Object> findAllExcludingRelationships();
+    List<Product> findAllExcludingRelationships();
 
-    Object findProductExcludingRelationships(Long id);
+    Product findProductExcludingRelationships(Long id);
 }

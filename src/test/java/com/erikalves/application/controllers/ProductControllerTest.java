@@ -79,6 +79,8 @@ public class ProductControllerTest {
 
         LOGGER.debug("Response results {}",response.getBody());
         Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
+        //it has to have at least the parent product with id of 1
+        Assert.assertTrue(response.getBody().contains("{\"results\":[{\"productId\":1,\"productParentId"));
 
     }
 
@@ -92,7 +94,9 @@ public class ProductControllerTest {
                 HttpMethod.GET,entity,String.class);
 
         LOGGER.debug("Response results {}",response.getBody());
-        Assert.assertTrue(response.getBody().contains("\"productId\":1"));
+        Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
+        //it has to have at least the parent product with id of 1
+        Assert.assertTrue(response.getBody().contains("{\"results\":[{\"productId\":1,\"productParentId"));
     }
 
 
@@ -106,6 +110,7 @@ public class ProductControllerTest {
                 HttpMethod.GET,entity,String.class);
 
         LOGGER.debug("Response results {}",response.getBody());
+        Assert.assertTrue(response.getBody().contains("1"));
         Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
 
     }
@@ -120,6 +125,7 @@ public class ProductControllerTest {
                 HttpMethod.GET,entity,String.class);
 
         LOGGER.debug("Response results {}",response.getBody());
+        Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
         Assert.assertTrue(response.getBody().contains("\"productId\":1"));
     }
 
@@ -129,6 +135,7 @@ public class ProductControllerTest {
         restTemplate.delete(createURLWithPort("/store/api/v1/products/"+savedProduct.getProductId()));
         Product deletedProduct = productService.get(savedProduct.getProductId());
         LOGGER.debug("Response results {}",deletedProduct);
+        Assert.assertNull(deletedProduct);
 
     }
 
