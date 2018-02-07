@@ -128,4 +128,26 @@ public class Util {
         return array;
 
     }
+
+    public static void main(String[] args) {
+
+        Product product = new Product();
+        product.setProductParentId(1l);
+        product.setProductName("Smartphone controller integration tests");
+        product.setProductDesc("controller integration tests for product");
+        product.setProductPrice(200.00);
+        product.setProductCreatedTs(Util.getCurrentTs());
+        product.setProductUpdatedTs(Util.getCurrentTs());
+
+        String json = new Gson().toJson(product);
+        LOGGER.debug("Json representation of a the created Product {} ", json);
+
+
+        Image image = new Image();
+        image.setProductId(2l);
+        image.setUrl("www.post-test.com/image.png");
+        json = new Gson().toJson(image);
+
+        LOGGER.debug("Json representation of a the created Image {} ", json);
+    }
 }
