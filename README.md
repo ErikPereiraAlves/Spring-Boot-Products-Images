@@ -1,4 +1,4 @@
-Scenario:
+# Scenario:
 
 We have a Product Entity with One to Many relationship with Image entity
 
@@ -36,27 +36,31 @@ Technical Specification:
 
 =====================================================================
 
-Solution:
+# Solution:
 
-Stack applied: Spring boot maven application using embedded H2 database.
+* Stack applied: Spring boot maven application using embedded H2 database.
 
-Please note:
+## Please note:
         I created the tables a bit different. For both Product and Image, there are more columns. For image specifically i used a column called url for the image's location.
-        And didn't use the column Type. The reason is that I only saw the DER from the recruiters email afterwards. But i strongly believe my solution is even more complete than
+        And didn't use the column Type, as i used URL column. The reason is that I only saw the DER from the recruiters email afterwards. But i strongly believe my solution is even more complete than
         the required example.
 
 
+### NOTE: parent products should have its parentProductId set to null. Example:
 
-How to Run and Test:
+            INSERT INTO PRODUCT (PRODUCT_ID, PRODUCT_PARENT_ID, PRODUCT_NAME,PRODUCT_DESC,PRODUCT_PRICE,PRODUCT_CREATED_TS,PRODUCT_UPDATED_TS)
+            VALUES (1,null,'Apple Iphone','Apple Smartphones', 0.0,CURRENT_TIMESTAMP(),CURRENT_TIMESTAMP());
+
+* How to Run and Test:
 
 
 1- Running Spring Boot Application
 
-We can run the spring boot application using the following maven command.
+* We can run the spring boot application using the following maven command.
 
     mvn spring-boot:run
 
-Run tests:
+* Run tests:
     mvn test
 
 
@@ -69,13 +73,9 @@ Run tests:
     3.1 - Product(s)
 
     GET:
-
         http://localhost:8080/store/api/v1/products/exclude                     (Gets all products excluding relationships)
-
         http://localhost:8080/store/api/v1/products/include                     (Gets all products including relationships)
-
         http://localhost:8080/store/api/v1/products/exclude/{product_id}        (Gets specific product excluding relationships)
-
         http://localhost:8080/store/api/v1/products/include/{product_id}        (Gets specific product including relationships)
 
     POST:
@@ -85,24 +85,20 @@ Run tests:
         http://localhost:8080/store/api/v1/products/
 
     DELETE:
-
          http://localhost:8080/store/api/v1/products/{product_id}
 
 
     3.2 - Image(s)
 
     GET:
-
         http://localhost:8080/store/api/v1/images/product/{product_id}          (Get all images for a given product)
 
     POST:
-
         http://localhost:8080/store/api/v1/images/
 
     PUT:
         http://localhost:8080/store/api/v1/images/
 
     DELETE:
-
         http://localhost:8080/store/api/v1/images//{image_id}
 

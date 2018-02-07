@@ -45,7 +45,7 @@ class ProductController {
     @GetMapping(value = "/include", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestApiResponseTo<Iterable<Product>>> findAllInclude() {
 
-        Iterable <Product> products = productService.findAll();
+        Iterable <Product> products = productService.findAllProductsIncludingRelationships();
 
         if(null!=products && products.spliterator().getExactSizeIfKnown() >0) {
             return ResponseEntity.ok(new RestApiResponseTo<>(products));

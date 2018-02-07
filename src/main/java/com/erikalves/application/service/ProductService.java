@@ -8,10 +8,9 @@ import java.util.List;
 
 public interface ProductService extends GenericService <Product,Long>{
 
+    List<Product> findAllProductsIncludingRelationships();
 
     List<Product> findProductIncludingRelationships(Long id);
-
-    List<Product> findProductRelationships(Long id);
 
     List<Product> findAllExcludingRelationships();
 

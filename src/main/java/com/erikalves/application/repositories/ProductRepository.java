@@ -13,12 +13,12 @@ import java.util.List;
 public interface ProductRepository  extends JpaRepository<Product, Long> {
 
     //finds the product itself and all of its children projects (both including its images)
-    @Query("SELECT p FROM Product p where p.productParentId = :productId or p.productId = :productId")
+    @Query("SELECT p FROM Product p where p.productId = :productId")
     List<Product> findProductIncludingRelationships(@Param("productId") Long id);
 
-    //find only a product's children products (and products images) excluding the product itself.
-    @Query("SELECT p FROM Product p where p.productParentId = :productId  and p.productId != :productId")
-    List<Product> findProductRelationships(@Param("productId") Long id);
+    @Query("SELECT p FROM Product p where p.productParentId = null")
+    List<Product> findAllProductsIncludingRelationships();
+
 
     //find all products, but excluding its children products.
     @Query("SELECT new com.erikalves.application.model.Product(p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs) FROM Product p ")

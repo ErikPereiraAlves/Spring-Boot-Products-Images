@@ -30,15 +30,17 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository;
     }
 
+
+    @Override
+    public List<Product> findAllProductsIncludingRelationships() {
+        return productRepository.findAllProductsIncludingRelationships();
+    }
+
     @Override
     public List<Product> findProductIncludingRelationships(Long id) {
         return productRepository.findProductIncludingRelationships(id);
     }
 
-    @Override
-    public List<Product> findProductRelationships(Long id) {
-        return productRepository.findProductRelationships(id);
-    }
 
     @Override
     public List<Product> findAllExcludingRelationships() {
