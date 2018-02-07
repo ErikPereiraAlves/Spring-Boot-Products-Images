@@ -131,6 +131,7 @@ public class Util {
 
     public static void main(String[] args) {
 
+
         Product product = new Product();
         product.setProductParentId(1l);
         product.setProductName("Smartphone controller integration tests");
