@@ -15,7 +15,7 @@ import java.net.URI;
 
 
 @RestController
-@RequestMapping("/store/api/v1/images/")
+@RequestMapping("/store/api/v1/images")
 class ImageController {
 
     //private static final Logger LOGGER = LoggerFactory.getLogger(ImageController.class);
