@@ -1,6 +1,7 @@
 package com.erikalves.application.controllers;
 
 
+import com.erikalves.application.exceptions.ApplicationException;
 import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ProductServiceImpl;
 import com.erikalves.application.utils.RestApiResponseTo;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.multiaction.NoSuchRequestHandlingMethodException;
 
 import java.net.URI;
 import java.util.List;
@@ -60,12 +62,13 @@ class ProductController {
     public ResponseEntity<RestApiResponseTo<Product>>  getExclude(@PathVariable("product_id") String productId) {
 
         Product product =productService.findProductExcludingRelationships(Util.LongfyId(productId));
-
+        LOGGER.debug("*** product {}",product);
         if(null!=product) {
             return ResponseEntity.ok(new RestApiResponseTo<>(product));
         }
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            //throw new ApplicationException("Product not found");
         }
 
     }
