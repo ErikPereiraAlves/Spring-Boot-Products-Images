@@ -5,7 +5,6 @@ import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ProductServiceImpl;
 import com.erikalves.application.utils.RestApiResponseTo;
 import com.erikalves.application.utils.Util;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,6 @@ class ProductController {
         else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
 
     }
 
@@ -114,7 +112,5 @@ class ProductController {
 
         return ResponseEntity.noContent().build();
     }
-
-
 
 }

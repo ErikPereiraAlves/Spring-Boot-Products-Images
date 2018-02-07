@@ -1,6 +1,5 @@
 package com.erikalves.application.controllers;
 
-import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ProductService;
 import com.erikalves.application.utils.Util;
