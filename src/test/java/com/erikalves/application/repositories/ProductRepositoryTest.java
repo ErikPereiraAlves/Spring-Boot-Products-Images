@@ -87,7 +87,7 @@ public class ProductRepositoryTest {
         Image image;
         for (int i = 0; i < 3; i++) {
             image = new Image();
-            image.setProductId(createdProduct.getProductId());
+            image.setProduct(createdProduct);
             image.setUrl("www.google/image" + i + ".png");
             images.add(image);
         }
@@ -103,11 +103,30 @@ public class ProductRepositoryTest {
     public void findProductIncludingRelationships() {
 
 
-        List<Product> list = productRepository.findProductIncludingRelationships(3l);
+        List<Product> list = productRepository.findProductIncludingRelationships(1l);
         Assert.assertTrue(null != list);
         for (Product product : list) {
             Assert.assertTrue(null != product);
             LOGGER.debug(" *** RESULT *** {}", product.toString());
+            Set <Image> images = product.getImages();
+            for(Image image : images){
+                LOGGER.debug(image.toString());
+            }
+            Set<Product> childrenProducts = product.getProducts();
+            for (Product childProduct : childrenProducts) {
+                Assert.assertTrue(null != childProduct);
+                Assert.assertTrue(null != childProduct.getProductId());
+                LOGGER.debug(" *** RESULT (child product) *** {}", childProduct.toString());
+
+                Set <Image> childrenImages = childProduct.getImages();
+                for(Image childImage : childrenImages){
+                    Assert.assertTrue(null != childImage);
+                    Assert.assertTrue(null != childImage.getProduct().getProductId());
+                    LOGGER.debug(childImage.toString());
+                }
+
+            }
+
         }
     }
 
@@ -115,23 +134,26 @@ public class ProductRepositoryTest {
     public void findProductExcludingRelationships() {
 
         //Product product = productRepository.findProductExcludingRelationships(3l);
-        Object product = productRepository.findProductExcludingRelationships(3l);
-        String json = Util.toJson(product);
-        Assert.assertTrue(null != json);
-        LOGGER.debug(" *** RESULT *** {}", json);
+        Product product = productRepository.findProductExcludingRelationships(3l);
+        Assert.assertTrue(null != product);
+        Assert.assertTrue(null != product.getProductId());
+        LOGGER.debug(" *** RESULT *** {}", product.toString());
+        //String json = Util.toJson(product);
+       // Assert.assertTrue(null != json);
+        //LOGGER.debug(" *** RESULT *** {}", json);
     }
 
 
     @Test
     public void findAllIncludingRelationships()  {
 
-        List<Product> list = productRepository.findAll();
+        List<Product> list = productRepository.findAllProductsIncludingRelationships();
 
         Assert.assertTrue(null != list);
         for(Product product: list){
             Assert.assertTrue(null != product);
             Assert.assertTrue(null != product.getProductId());
-           LOGGER.debug(" *** RESULT *** {}", product.toString());
+            LOGGER.debug(" *** RESULT *** {}", product.toString());
         }
 
     }
@@ -142,8 +164,13 @@ public class ProductRepositoryTest {
         String json;
         List<Product> list = productRepository.findAllExcludingRelationships();
         Assert.assertTrue(null != list && list.size()>0);
-        JSONArray array = Util.toJsonArray(list);
-        LOGGER.debug(" *** RESULT *** {}", array);
+        for(Product product: list){
+            Assert.assertTrue(null != product);
+            Assert.assertTrue(null != product.getProductId());
+            LOGGER.debug(" *** RESULT *** {}", product.toString());
+        }
+        //JSONArray array = Util.toJsonArray(list);
+        //LOGGER.debug(" *** RESULT *** {}", array);
 
     }
 

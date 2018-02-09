@@ -44,7 +44,7 @@ public class ImageRepositoryTest {
             for(Product product: list) {
                 image = new Image();
                 image.setUrl("www.google.com/test"+product.getProductId()+".png");
-                image.setProductId(product.getProductId());
+                image.setProduct(product);
                 imageList.add(image);
             }
         }
@@ -52,7 +52,7 @@ public class ImageRepositoryTest {
             Product product = createTestProduct();
             image = new Image();
             image.setUrl("www.google.com/test"+product.getProductId()+".png");
-            image.setProductId(product.getProductId());
+            image.setProduct(product);
             imageList.add(image);
         }
 
@@ -90,7 +90,7 @@ public class ImageRepositoryTest {
         for (Image image : imageList) {
             tempImage = imageRepository.save(image);
             LOGGER.debug("saved image ID {}", tempImage);
-            Assert.assertNotNull(tempImage.getProductId());
+            Assert.assertNotNull(tempImage.getProduct());
             Assert.assertNotNull(tempImage.getImageId());
 
         }
@@ -101,7 +101,8 @@ public class ImageRepositoryTest {
 
           Image deletedImage = imageList.get(0);
           Long imageId = deletedImage.getImageId();
-          Long productId = deletedImage.getProductId();
+          Product product= deletedImage.getProduct();
+          Long productId = product.getProductId();
           if(null!=deletedImage){
               imageRepository.delete(deletedImage);
               imageList.remove(deletedImage);
@@ -122,10 +123,10 @@ public class ImageRepositoryTest {
 
         Image updatedImage;
         for(Image image: imageList){
-            image.setUrl("www.google.com/updated"+ image.getProductId()+".png");
+            image.setUrl("www.google.com/updated"+ image.getProduct().getProductId()+".png");
             updatedImage =imageRepository.save(image);
             Assert.assertTrue(null != updatedImage);
-            assertTrue(updatedImage.getUrl().equals("www.google.com/updated"+ updatedImage.getProductId()+".png"));
+            assertTrue(updatedImage.getUrl().equals("www.google.com/updated"+ updatedImage.getProduct().getProductId()+".png"));
         }
 
 

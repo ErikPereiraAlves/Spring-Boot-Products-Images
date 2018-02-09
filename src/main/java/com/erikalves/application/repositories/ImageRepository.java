@@ -13,7 +13,7 @@ import java.util.List;
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
 
-    @Query("SELECT i FROM Image i where i.productId = :productId")
+    @Query("SELECT i FROM Image i where i.product.productId = :productId")
     List<Image> findAllImagesByProductId(@Param("productId") Long id);
 
 }

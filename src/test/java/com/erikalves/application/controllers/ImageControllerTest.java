@@ -78,7 +78,7 @@ public class ImageControllerTest {
 
     private void createTestImage(){
         Image image = new Image();
-        image.setProductId(2l);
+        image.setProduct(savedProduct);
         image.setUrl("www.post-test.com/image.png");
         savedImage = imageService.save(image);
     }
@@ -93,7 +93,8 @@ public class ImageControllerTest {
                 HttpMethod.GET,entity,String.class);
 
         LOGGER.debug("Response results {}",response.getBody());
-        Assert.assertTrue(!response.getBody().contains("Internal Server Error"));
+        Assert.assertFalse(response.getBody().contains("Internal Server Error"));
+        Assert.assertTrue(response.getBody().contains("{\"results\":[{\"imageId\":"));
     }
 
     @Test
@@ -109,7 +110,7 @@ public class ImageControllerTest {
     public void shouldCreateImage() {
 
         Image image = new Image();
-        image.setProductId(2l);
+        image.setProduct(savedProduct);
         image.setUrl("www.post-test.com/image.png");
 
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(createURLWithPort("/store/api/v1/images/") , image, String.class);

@@ -12,11 +12,14 @@ import java.util.List;
 @Repository
 public interface ProductRepository  extends JpaRepository<Product, Long> {
 
-    //finds the product itself and all of its children projects (both including its images)
+    //finds specific product and all of its children projects (its images and children products)
     @Query("SELECT p FROM Product p where p.productId = :productId")
     List<Product> findProductIncludingRelationships(@Param("productId") Long id);
 
-    @Query("SELECT p FROM Product p where p.productParentId = null")
+    // this will bring only "parent type" products, since the child products will be already included in each parent's Set of children products. \
+    // Therefore, to pick up all, i only need to look for the root ones, the parents, since the ones that have a valid productParentId will eventually
+    //come along with its root parent product.
+    @Query("SELECT p FROM Product p where p.productParentId = null") //this means i am looking for root parent type products.
     List<Product> findAllProductsIncludingRelationships();
 
 
@@ -24,8 +27,10 @@ public interface ProductRepository  extends JpaRepository<Product, Long> {
     @Query("SELECT new com.erikalves.application.model.Product(p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs) FROM Product p ")
     List<Product> findAllExcludingRelationships();
 
-    //find product, but excluding its children products.
+    //find specific product, but excluding its children products.
    // @Query("SELECT distinct p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs FROM Product p WHERE  p.productId = :productId ")
     @Query("select new com.erikalves.application.model.Product(p.productId, p.productParentId, p.productName, p.productDesc, p.productPrice, p.productCreatedTs, p.productUpdatedTs) FROM Product p WHERE  p.productId = :productId")
     Product findProductExcludingRelationships(@Param("productId") Long id);
+
+
 }

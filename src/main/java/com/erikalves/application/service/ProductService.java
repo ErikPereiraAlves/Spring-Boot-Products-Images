@@ -15,4 +15,6 @@ public interface ProductService extends GenericService <Product,Long>{
     List<Product> findAllExcludingRelationships();
 
     Product findProductExcludingRelationships(Long id);
+
+
 }

@@ -70,7 +70,7 @@ public class ImageServiceImplTest {
 
         image = new Image();
         image.setUrl("www.google.com/imageservice.png");
-        image.setProductId(savedProduct.getProductId());
+        image.setProduct(savedProduct);
         savedImage = imageService.save(image);
 
     }

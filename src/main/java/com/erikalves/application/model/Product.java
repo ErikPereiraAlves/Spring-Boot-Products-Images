@@ -1,11 +1,12 @@
 package com.erikalves.application.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import javax.validation.constraints.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -23,28 +24,33 @@ public class Product implements Serializable {
     @Column (name = "PRODUCT_PARENT_ID")
     private Long productParentId;
 
+    @NotNull
     @Column (name = "PRODUCT_NAME")
     private String productName;
 
+    @NotNull
     @Column (name = "PRODUCT_DESC")
     private String productDesc;
 
+    @NotNull
     @Column (name = "PRODUCT_PRICE")
     private Double productPrice;
+
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Column (name = "PRODUCT_CREATED_TS")
     private Timestamp productCreatedTs;
 
+
     @JsonFormat(pattern="yyyy-MM-dd")
     @Column (name = "PRODUCT_UPDATED_TS")
     private Timestamp productUpdatedTs;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productId")
-    private Set<Image> images;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="product")
+    private Set<Image> images = new LinkedHashSet<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="productParentId")
-    private Set<Product> products;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="productParentId")
+    private Set<Product> products = new LinkedHashSet<>();
 
     public Product() {
     }
@@ -142,7 +148,8 @@ public class Product implements Serializable {
                 "productPrice='" + productPrice + '\'' +
                 "productCreatedTs='" + productCreatedTs + '\'' +
                 "productUpdatedTs='" + productUpdatedTs + '\'' +
-
+                "images count ='" + images.toString() + '\'' +
+                "products count='" + products.toString() +
                 '}';
     }
 }

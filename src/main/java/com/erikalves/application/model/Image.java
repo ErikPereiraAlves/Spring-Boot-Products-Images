@@ -1,6 +1,9 @@
 package com.erikalves.application.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -15,9 +18,12 @@ public class Image implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imageId;
 
-    @Column(name = "PRODUCT_ID")
-    private Long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    @JsonIgnore
+    private Product product;
 
+    @NotNull
     @Column(name = "URL")
     private String url;
 
@@ -30,12 +36,12 @@ public class Image implements Serializable {
         this.imageId = imageId;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getUrl() {
@@ -53,7 +59,7 @@ public class Image implements Serializable {
         return "Image{" +
                 "imageId='" + imageId + '\'' +
                 "url='" + url + '\'' +
-                "product='" + productId +
+                "product id='" + product.getProductId()+ '\'' +
                 '}';
     }
 

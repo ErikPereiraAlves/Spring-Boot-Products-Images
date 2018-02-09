@@ -145,7 +145,7 @@ public class Util {
 
 
         Image image = new Image();
-        image.setProductId(2l);
+        image.setProduct(product);
         image.setUrl("www.post-test.com/image.png");
         json = new Gson().toJson(image);
 
