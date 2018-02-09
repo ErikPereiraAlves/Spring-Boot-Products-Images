@@ -21,6 +21,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -54,6 +57,8 @@ public class ProductControllerTest {
     }
 
     private void createTestProduct() {
+
+        //given
         Product product = new Product();
         product.setProductParentId(1l);
         product.setProductName("Smartphone controller integration tests");
@@ -64,6 +69,14 @@ public class ProductControllerTest {
         savedProduct = productService.save(product);
         productJson = new Gson().toJson(savedProduct);
         LOGGER.debug("Json representation of a the created Product {} ", productJson);
+
+        //when
+        Product findProduct = productService.get(savedProduct.getProductId());
+
+
+        //then
+        assertTrue(findProduct.getProductId()==(savedProduct.getProductId()));
+
     }
 
 
