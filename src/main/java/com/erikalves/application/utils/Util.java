@@ -4,6 +4,7 @@ import com.erikalves.application.exceptions.ApplicationException;
 import com.erikalves.application.model.Image;
 import com.erikalves.application.model.Product;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -15,8 +16,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 public class Util {
 
@@ -57,7 +64,7 @@ public class Util {
         }
     }
 
-    public static Collection<Image> deserializeImageCollection( String jsonAsString) throws ApplicationException {
+    public static Collection<Image> deserializeImageCollection(String jsonAsString) throws ApplicationException {
 
         return deserialize(IMAGE_COLLECTION_TYPE_TOKEN, jsonAsString);
     }
@@ -73,10 +80,9 @@ public class Util {
         if (StringUtils.isNotBlank(jsonAsString)) {
             String trimmedJsonLogs = jsonAsString.trim();
             try {
-                if(type == IMAGE_COLLECTION_TYPE_TOKEN) {
+                if (type == IMAGE_COLLECTION_TYPE_TOKEN) {
                     return GSON.fromJson(trimmedJsonLogs, IMAGE_COLLECTION_TYPE_TOKEN);
-                }
-                else if(type == PRODUCT_COLLECTION_TYPE_TOKEN) {
+                } else if (type == PRODUCT_COLLECTION_TYPE_TOKEN) {
                     return GSON.fromJson(trimmedJsonLogs, PRODUCT_COLLECTION_TYPE_TOKEN);
                 }
             } catch (Exception e) {
@@ -88,66 +94,78 @@ public class Util {
     }
 
 
+    public static java.sql.Date getCurrentDate()  {
 
-    public static java.sql.Date getCurrentDate(){
-
-        return new java.sql.Date(System.currentTimeMillis());
-    }
-    public static java.sql.Timestamp getCurrentTs(){
-        return new Timestamp(System.currentTimeMillis());
+        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        java.sql.Date date = java.sql.Date.valueOf(dateTime);
+        return date;
     }
 
-    public static String StringfyId(Long id){
+    public static java.sql.Timestamp getCurrentTs() {
+
+        String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
+        Timestamp timestamp = Timestamp.valueOf(dateTime);
+        return timestamp;
+    }
+
+
+    public static String StringfyId(Long id) {
 
         return Long.toString(id);
     }
 
-    public static Long LongfyId(String str){
+    public static Long LongfyId(String str) {
+
         long number = Long.parseLong(str);
         return number;
     }
 
-    public static String toJson(Product object){
-        String json = new Gson().toJson(object);
+    public static String toJson(Product object) {
 
+        String json = new Gson().toJson(object);
         return json;
 
     }
 
-    public static String toJson(Object object){
-        String json = new Gson().toJson(object);
+    public static String toJson(Object object) {
 
+        String json = new Gson().toJson(object);
         return json;
 
     }
 
-    public static JSONArray toJsonArray(Object object){
+    public static JSONArray toJsonArray(Object object) {
 
         String json = toJson(object);
-       JSONArray array = new JSONArray(json);
+        JSONArray array = new JSONArray(json);
         return array;
 
     }
 
-    public static void main(String[] args) {
+    public static Gson getGson() {
 
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss.SSS").create();
+        return gson;
+    }
+
+    public static void main(String[] args) {
 
         Product product = new Product();
         product.setProductParentId(1l);
         product.setProductName("Smartphone controller integration tests");
-        product.setProductDesc("controller integration tests for product");
+        product.setProductDesc("controller integration tests for product at " + Util.getCurrentDate());
         product.setProductPrice(200.00);
-        product.setProductCreatedTs(Util.getCurrentTs());
-        product.setProductUpdatedTs(Util.getCurrentTs());
+        product.setProductCreatedTs(Util.getCurrentDate());
+        product.setProductUpdatedTs(Util.getCurrentDate());
+        LOGGER.debug("Products created TS {} ", product.getProductCreatedTs());
 
-        String json = new Gson().toJson(product);
+        String json = getGson().toJson(product);
         LOGGER.debug("Json representation of a the created Product {} ", json);
-
 
         Image image = new Image();
         image.setProduct(product);
         image.setUrl("www.post-test.com/image.png");
-        json = new Gson().toJson(image);
+        json = getGson().toJson(image);
 
         LOGGER.debug("Json representation of a the created Image {} ", json);
     }

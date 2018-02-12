@@ -40,8 +40,8 @@ public class ProductRepositoryTest {
         createdProduct.setProductName("Smartphone JUNIT");
         createdProduct.setProductDesc("Junit now manufactures smartphones");
         createdProduct.setProductPrice(200.00);
-        createdProduct.setProductCreatedTs(Util.getCurrentTs());
-        createdProduct.setProductUpdatedTs(Util.getCurrentTs());
+        createdProduct.setProductCreatedTs(Util.getCurrentDate());
+        createdProduct.setProductUpdatedTs(Util.getCurrentDate());
 
     }
 

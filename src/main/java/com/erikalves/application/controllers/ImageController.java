@@ -2,7 +2,9 @@ package com.erikalves.application.controllers;
 
 
 import com.erikalves.application.model.Image;
+import com.erikalves.application.model.Product;
 import com.erikalves.application.service.ImageService;
+import com.erikalves.application.service.ProductService;
 import com.erikalves.application.utils.RestApiResponseTo;
 import com.erikalves.application.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ class ImageController {
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private ProductService productService;
 
 
     @GetMapping(value = "/product/{product_id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,9 +68,11 @@ class ImageController {
     }
 
     // create
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestApiResponseTo<Image>> create(@RequestBody Image image) {
+    @PostMapping(value = "/{product_id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RestApiResponseTo<Image>> create(@PathVariable("product_id") String productId, @RequestBody Image image) {
 
+        Product product = productService.get(Util.LongfyId(productId));
+        image.setProduct(product);
         Image savedImage = imageService.save(image);
 
         return ResponseEntity.created(URI.create("/" + image.getImageId())).body(new RestApiResponseTo<>(savedImage));
@@ -74,11 +81,13 @@ class ImageController {
 
     // update
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> update(@RequestBody Image image) {
+    public ResponseEntity<RestApiResponseTo<Image>> update(@RequestBody Image image) {
 
-        imageService.update(image);
+        Image foundImage = imageService.get(image.getImageId());
+        foundImage.setUrl(image.getUrl());
+        imageService.update(foundImage);
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.created(URI.create("/" + foundImage.getImageId())).body(new RestApiResponseTo<>(foundImage));
     }
 
 

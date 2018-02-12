@@ -59,7 +59,7 @@ public class Image implements Serializable {
         return "Image{" +
                 "imageId='" + imageId + '\'' +
                 "url='" + url + '\'' +
-                "product id='" + product.getProductId()+ '\'' +
+                "product id='" + (null!= product ? product.getProductId(): "not found")+ '\'' +
                 '}';
     }
 

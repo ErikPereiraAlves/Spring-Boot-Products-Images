@@ -65,8 +65,8 @@ public class ImageRepositoryTest {
         product.setProductName("Smartphone JUNIT just for image test cases");
         product.setProductDesc("Junit now manufactures smartphones thru image repository");
         product.setProductPrice(200.00);
-        product.setProductCreatedTs(Util.getCurrentTs());
-        product.setProductUpdatedTs(Util.getCurrentTs());
+        product.setProductCreatedTs(Util.getCurrentDate());
+        product.setProductUpdatedTs(Util.getCurrentDate());
 
         Product savedProduct = productRepository.save(product);
         LOGGER.debug("saved product ID {}",savedProduct);

@@ -61,8 +61,8 @@ public class ImageServiceImplTest {
         product.setProductName("Smartphone Product service impl test");
         product.setProductDesc("ProductServiceImplTest");
         product.setProductPrice(100.55);
-        product.setProductCreatedTs(Util.getCurrentTs());
-        product.setProductUpdatedTs(Util.getCurrentTs());
+        product.setProductCreatedTs(Util.getCurrentDate());
+        product.setProductUpdatedTs(Util.getCurrentDate());
 
         savedProduct = productService.save(product);
         LOGGER.debug("saved product ID {}", savedProduct.getProductId());

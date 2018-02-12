@@ -39,12 +39,12 @@ public class Product implements Serializable {
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Column (name = "PRODUCT_CREATED_TS")
-    private Timestamp productCreatedTs;
+    private Date productCreatedTs;
 
 
     @JsonFormat(pattern="yyyy-MM-dd")
     @Column (name = "PRODUCT_UPDATED_TS")
-    private Timestamp productUpdatedTs;
+    private Date productUpdatedTs;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="product")
     private Set<Image> images = new LinkedHashSet<>();
@@ -61,8 +61,8 @@ public class Product implements Serializable {
         this.productName = productName;
         this.productDesc = productDesc;
         this.productPrice = productPrice;
-        this.productCreatedTs = new java.sql.Timestamp(productCreatedTs.getTime());
-        this.productUpdatedTs =  new java.sql.Timestamp(productUpdatedTs.getTime()); ;
+        this.productCreatedTs = productCreatedTs;
+        this.productUpdatedTs = productUpdatedTs ;
 
     }
 
@@ -106,19 +106,19 @@ public class Product implements Serializable {
         this.productPrice = productPrice;
     }
 
-    public Timestamp getProductCreatedTs() {
+    public Date getProductCreatedTs() {
         return productCreatedTs;
     }
 
-    public void setProductCreatedTs(Timestamp productCreatedTs) {
+    public void setProductCreatedTs(Date productCreatedTs) {
         this.productCreatedTs = productCreatedTs;
     }
 
-    public Timestamp getProductUpdatedTs() {
+    public Date getProductUpdatedTs() {
         return productUpdatedTs;
     }
 
-    public void setProductUpdatedTs(Timestamp productUpdatedTs) {
+    public void setProductUpdatedTs(Date productUpdatedTs) {
         this.productUpdatedTs = productUpdatedTs;
     }
 

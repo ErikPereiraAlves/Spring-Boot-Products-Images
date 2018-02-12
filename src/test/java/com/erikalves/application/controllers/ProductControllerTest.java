@@ -64,8 +64,8 @@ public class ProductControllerTest {
         product.setProductName("Smartphone controller integration tests");
         product.setProductDesc("controller integration tests for product");
         product.setProductPrice(200.00);
-        product.setProductCreatedTs(Util.getCurrentTs());
-        product.setProductUpdatedTs(Util.getCurrentTs());
+        product.setProductCreatedTs(Util.getCurrentDate());
+        product.setProductUpdatedTs(Util.getCurrentDate());
         savedProduct = productService.save(product);
         productJson = new Gson().toJson(savedProduct);
         LOGGER.debug("Json representation of a the created Product {} ", productJson);

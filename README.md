@@ -69,7 +69,7 @@ Technical Specification:
 
     I configured the H2 Web Console to be accessible via the /console path. You can access the console via http://localhost:8080/console  (user id:<ac> )
 
-3- Integration test thru Postman
+3- Integration test using Postman
 
     3.1 - Product(s)
 
@@ -86,8 +86,14 @@ Technical Specification:
     POST:
         http://localhost:8080/store/api/v1/products/
 
+        example:
+            {"productParentId":1,"productName":"Smartphone postman","productDesc":"controller integration tests for product","productPrice":100.0,"productCreatedTs":"2018-02-12","productUpdatedTs":"2018-02-12","images":[],"products":[]}
+
     PUT:
         http://localhost:8080/store/api/v1/products/
+
+        example:  {"productParentId":1,"productName":"Smartphone postman","productDesc":"MODIFIED","productPrice":100.0,"productCreatedTs":"2018-02-12","productUpdatedTs":"2018-02-12","images":[],"products":[]}
+
 
     DELETE:
          http://localhost:8080/store/api/v1/products/{product_id}
@@ -100,11 +106,17 @@ Technical Specification:
 
         http://localhost:8080/store/api/v1/images/{image_id}                    (Get specific image by its id)
 
+
     POST:
-        http://localhost:8080/store/api/v1/images/
+        http://localhost:8080/store/api/v1/images/{product_id}                  (in order to create an image, one need to have it associated to an existing product)
+
+        example:   {"url":"www.post-test.com/image.png"}
+
 
     PUT:
         http://localhost:8080/store/api/v1/images/
+
+        example:    {"imageId": 4,"url":"www.post-UPDATED.com/image.png"}
 
     DELETE:
         http://localhost:8080/store/api/v1/images/{image_id}

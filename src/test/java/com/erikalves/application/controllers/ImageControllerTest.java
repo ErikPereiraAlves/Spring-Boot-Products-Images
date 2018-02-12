@@ -69,8 +69,8 @@ public class ImageControllerTest {
         product.setProductName("Smartphone controller integration tests");
         product.setProductDesc("controller integration tests for product");
         product.setProductPrice(200.00);
-        product.setProductCreatedTs(Util.getCurrentTs());
-        product.setProductUpdatedTs(Util.getCurrentTs());
+        product.setProductCreatedTs(Util.getCurrentDate());
+        product.setProductUpdatedTs(Util.getCurrentDate());
         savedProduct = productService.save(product);
         productJson = new Gson().toJson(savedProduct);
         LOGGER.debug("Json representation of a the created Product {} ", productJson);
@@ -110,10 +110,9 @@ public class ImageControllerTest {
     public void shouldCreateImage() {
 
         Image image = new Image();
-        image.setProduct(savedProduct);
         image.setUrl("www.post-test.com/image.png");
 
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(createURLWithPort("/store/api/v1/images/") , image, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(createURLWithPort("/store/api/v1/images/3") , image, String.class);
 
         LOGGER.debug("Response results {}",responseEntity.getBody().toString());
         Assert.assertNotNull(responseEntity);
