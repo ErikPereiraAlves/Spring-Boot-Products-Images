@@ -67,7 +67,7 @@ public class ProductControllerTest {
         product.setProductCreatedTs(Util.getCurrentDate());
         product.setProductUpdatedTs(Util.getCurrentDate());
         savedProduct = productService.save(product);
-        productJson = new Gson().toJson(savedProduct);
+        productJson = Util.getGson().toJson(savedProduct);
         LOGGER.debug("Json representation of a the created Product {} ", productJson);
 
         //when
